@@ -9,14 +9,18 @@ def f(x, a, b, c):
 
 
 if len(sys.argv) > 1:
-    config = parser.Config(*map(int, sys.argv[1:]))
+    config = parser.ParserTxt().parse_text("".join(sys.argv[1:]))
 else:
     config = parser.ParserJSON().parse("config.json")
+
+if config is None:
+    print("Can't parse parameters")
+    sys.exit(-1)
 
 result = {}
 for x in range(config.n0, config.nk + config.h, config.h):
     result[x] = f(x, config.a, config.b, config.c)
 
-
-with open("results.json", "w") as f:
+# What if result too big?
+with open("result.json", "w") as f:
     json.dump(result, f)

@@ -13,15 +13,32 @@ class Config:
 
 
 class ParserJSON:
-    def __init__(self):
-        pass
+    def parse(self, filename: str) -> Config | None:
+        try:
+            with open(filename, "r") as f:
+                json_file = json.loads(f.read())
+                config = Config(**json_file)
+                if config.n0 > config.nk:
+                    return None
+                return config
+        except (FileNotFoundError, json.decoder.JSONDecodeError, TypeError) as e:
+            print(e)
+            return None
 
-    def parse(self, filename) -> Config:
-        with open(filename, "r") as f:
-            json_file = json.loads(f.read())
-            return Config(**json_file)
+
+class ParserTxt:
+    def parse_text(self, text: str) -> Config | None:
+        try:
+            config = Config(*map(int, text.split()))
+            if config.n0 > config.nk:
+                return None
+            return config
+        except (TypeError, ValueError) as e:
+            print(e)
+            return None
 
 
 if __name__ == "__main__":
     parser = ParserJSON()
-    print(parser.parse("config.json"))
+    print(ParserJSON().parse("config.json"))
+    print(ParserTxt().parse_text("0 1 10 1 1 1"))
