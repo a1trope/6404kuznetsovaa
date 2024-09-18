@@ -1,7 +1,5 @@
-import sys
+import Parser
 import math
-import json
-import parser
 
 
 def test_function(x: float, a: float, b: float, c: float) -> float:
@@ -9,21 +7,15 @@ def test_function(x: float, a: float, b: float, c: float) -> float:
 
 
 def main() -> None:
-    if len(sys.argv) > 1:
-        config = parser.ParserTxt().parse_text("".join(sys.argv[1:]))
-    else:
-        config = parser.ParserJSON().parse("config.json")
+    config = Parser.parse_json("config.json")
+    # config = Parser.parse_csv("config.csv")
+    # config = Parser.parse_xml("config.xml")
+    # config = Parser.command_line_parser()
 
-    if config is None:
-        print("Can't parse parameters")
-        sys.exit(-1)
+    # print(f"{config:json}")
+    # print(f"{config:xml}")
 
-    result = {}
-    for x in range(config.n0, config.nk + config.h, config.h):
-        result[x] = test_function(x, config.a, config.b, config.c)
-
-    with open("result.json", "w") as f:
-        json.dump(result, f)
+    config.file_output("result.txt", "json")
 
 
 if __name__ == "__main__":
