@@ -16,7 +16,7 @@ class FunctionConfig:
             case 'json':
                 result_string = "{\n"
                 for f_name, f_val in self.__dict__.items():
-                    result_string += f"\t{f_name}: {f_val}"
+                    result_string += f"\t\"{f_name}\": {f_val}"
                     if f_name != "c":
                         result_string += ","
                     result_string += "\n"
