@@ -18,7 +18,7 @@ class ParserJSON:
             with open(filename, "r") as f:
                 json_file = json.loads(f.read())
                 config = Config(**json_file)
-                if config.n0 > config.nk:
+                if (config.n0 > config.nk and config.h > 0) or (config.n0 < config.nk and config.h < 0):
                     return None
                 return config
         except (FileNotFoundError, json.decoder.JSONDecodeError, TypeError) as e:
@@ -30,7 +30,7 @@ class ParserTxt:
     def parse_text(self, text: str) -> Config | None:
         try:
             config = Config(*map(int, text.split()))
-            if config.n0 > config.nk:
+            if (config.n0 > config.nk and config.h > 0) or (config.n0 < config.nk and config.h < 0):
                 return None
             return config
         except (TypeError, ValueError) as e:
@@ -39,6 +39,8 @@ class ParserTxt:
 
 
 if __name__ == "__main__":
-    parser = ParserJSON()
     print(ParserJSON().parse("config.json"))
     print(ParserTxt().parse_text("0 1 10 1 1 1"))
+    print(ParserTxt().parse_text("10 -1 0 1 1 1"))
+    print(ParserTxt().parse_text("10 1 0 1 1 1"))
+    print(ParserTxt().parse_text("0 -1 10 1 1 1"))
