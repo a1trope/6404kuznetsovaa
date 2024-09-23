@@ -1,12 +1,12 @@
 def serialize_values(values: dict, file_format: str = "json"):
     match file_format:
         case 'json':
-            result_string = "{\n" + ",\n".join((f'\t{k}: {v}' for k, v in values.items())) + "\n}"
+            result_string = "{\n" + ",\n".join((f'\t"{k}": {v}' for k, v in values.items())) + "\n}"
             return result_string
         case 'xml':
             result_string = "<result>\n"
             for f_name, f_val in values.items():
-                result_string += f"\t<{f_name}>{f_val}</{f_name}>\n"
+                result_string += f"\t<value_{f_name}>{f_val}</value_{f_name}>\n"
             result_string += "</result>"
             return result_string
 

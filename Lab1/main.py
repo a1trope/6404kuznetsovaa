@@ -5,6 +5,7 @@ import math
 def test_function(x: float, a: float, b: float, c: float) -> float:
     return a - math.cos(b * x + c) ** 2
 
+
 def get_values(config: Parser.FunctionConfig) -> dict:
     values = {}
     x = config.n0
@@ -24,7 +25,7 @@ def main() -> None:
     # print(f"{config:xml}")
 
     values = get_values(config)
-    file_format = "json"
+    file_format = "xml"
     with open(f"output.{file_format}", "w") as f:
         f.write(Parser.serialize_values(values, file_format=file_format))
 
