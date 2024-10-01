@@ -26,7 +26,7 @@ def main() -> None:
 
     values = get_values(config)
     file_format = "xml"
-    with open(f"output.{file_format}", "w") as f:
+    with open(f"Lab1/output.{file_format}", "w") as f:
         f.write(Parser.serialize_values(values, file_format=file_format))
 
 
