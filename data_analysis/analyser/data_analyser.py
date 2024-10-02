@@ -1,7 +1,7 @@
 from pandas import Series
 
 
-def get_moving_average(series, window_size: int):
+def get_moving_average(series: Series, window_size: int):
     rolling_means = []
 
     for i in range(len(series)):
