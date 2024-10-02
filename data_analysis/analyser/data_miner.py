@@ -4,8 +4,9 @@ from pandas.core.frame import DataFrame, Series
 
 
 def get_temperature_series(latitude: float, longitude: float, altitude: int, start: datetime, end: datetime) -> Series:
-    if start > end:
-        start, end = end, start
+    # if start > end:
+    #     start, end = end, start
+    start, end = (end, start) if start > end else (start, end)
 
     point = Point(latitude, longitude, altitude)
     data: DataFrame = Daily(point, start, end).fetch()
