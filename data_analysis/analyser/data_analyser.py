@@ -14,12 +14,12 @@ def get_moving_average(series, window_size: int):
             rolling_mean = window_sum / window_size
         rolling_means.append(rolling_mean)
 
-    rolling_mean_series = pd.Series(rolling_means, index=series.index)
+    rolling_mean_series = Series(rolling_means, index=series.index)
     return rolling_mean_series
 
 
 def get_timeseries_differential(series: Series):
-    raise series.diff()
+    return series.diff()
 
 
 def get_autocorrelation(series: Series, lag: int = 1):
